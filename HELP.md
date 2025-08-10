@@ -26,6 +26,8 @@ The following was discovered as part of building this project:
 * The project includes a RESTful web service
   using [Spring Web](https://docs.spring.io/spring-boot/3.5.4/reference/web/servlet.html).
 
+### API Documentation
+Access swagger UI at `http://localhost:8080/swagger-ui/index.html` to explore the API endpoints.
 ### Reference Documentation
 
 For further reference, please consider the following sections:
