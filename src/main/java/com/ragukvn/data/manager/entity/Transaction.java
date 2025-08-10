@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ import java.time.LocalTime;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Transaction {
 
     @Id
@@ -52,15 +55,4 @@ public class Transaction {
     @Version
     private Long version;
 
-    // Creating a builder for Transaction entity excluding the transaction id which will be created automatically.
-    @Builder
-    public Transaction(String accountNumber, BigDecimal trxAmount, String description,
-                       LocalDate trxDate, LocalTime trxTime, Long customerId) {
-        this.accountNumber = accountNumber;
-        this.trxAmount = trxAmount;
-        this.description = description;
-        this.trxDate = trxDate;
-        this.trxTime = trxTime;
-        this.customerId = customerId;
-    }
 }

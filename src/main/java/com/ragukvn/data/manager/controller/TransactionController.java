@@ -5,6 +5,7 @@ import com.ragukvn.data.manager.constant.ApiPath;
 import com.ragukvn.data.manager.model.dto.PageableRequest;
 import com.ragukvn.data.manager.model.dto.TransactionDto;
 import com.ragukvn.data.manager.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class TransactionController {
     public static final String SEARCH = "/search";
     private final TransactionService transactionService;
 
+    @Operation(summary = "Get all transactions", description = "Retrieves a paginated list of all transactions")
     @GetMapping(ApiPath.ALL)
     public Page<TransactionDto> getTransactions(@Valid PageableRequest pageRequest) {
         // This method should return a list of transactions
@@ -40,7 +42,8 @@ public class TransactionController {
         return transactionService.getTransactions(pageable); // Placeholder for actual implementation
     }
 
-    @Tag(name = "Get Transactions", description = "Retrieve a list of transactions")
+
+    @Operation(summary = "Search transactions", description = "Search transactions based on customer ID, description, and account numbers")
     @GetMapping(SEARCH)
     public Page<TransactionDto> searchTransaction(
             @Valid PageableRequest pageRequest,
@@ -53,11 +56,11 @@ public class TransactionController {
     }
 
 
-    @Tag(name = "Update Transaction", description = "Update a transaction")
+    @Operation(summary = "Update a transaction", description = "Updates an existing transaction with the provided details")
     @PutMapping
-    public Object updateTransaction(@Valid @RequestBody TransactionDto requestBody) {
+    public TransactionDto updateTransaction(@Valid @RequestBody TransactionDto transactionDto) {
         // This method should return a list of transactions
-        return null; // Placeholder for actual implementation
+        return transactionService.updateTransaction(transactionDto); // Placeholder for actual implementation
     }
 
 }

@@ -34,9 +34,13 @@ public class TransactionDto {
     private LocalDate trxDate;
 
     @NotNull(message = "Transaction time cannot be null")
-    @PastOrPresent(message = "Transaction time must be in the past or present")
+    //@PastOrPresent(message = "Transaction time must be in the past or present")
     private LocalTime trxTime;
 
     @NotNull(message = "Customer ID cannot be null")
     private Long customerId;
+
+    @NotNull(message = "Customer ID cannot be null")
+    @Min(value = 0, message = "Version must be greater than or equal to zero")
+    private Long version;
 }
