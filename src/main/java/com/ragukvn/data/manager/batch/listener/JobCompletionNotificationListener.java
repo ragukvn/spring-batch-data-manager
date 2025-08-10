@@ -1,4 +1,4 @@
-package com.ragukvn.data.manager.listener;
+package com.ragukvn.data.manager.batch.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;
