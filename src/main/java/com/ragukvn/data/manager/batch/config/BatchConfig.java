@@ -4,6 +4,7 @@ import com.ragukvn.data.manager.batch.listener.JobCompletionNotificationListener
 import com.ragukvn.data.manager.entity.Transaction;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -36,6 +37,7 @@ import static com.ragukvn.data.manager.batch.constant.BatchAppConstants.VALID_FI
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class BatchConfig {
     // @EnableBatchProcessing is not used here as it is deprecated in Spring Boot 3.x
 
@@ -45,6 +47,7 @@ public class BatchConfig {
 
     @Bean
     public Job importJob(JobRepository jobRepository, Step fileLoadStep, JobCompletionNotificationListener listener) {
+        log.info("Creating job: {}", batchAppConfigs.getJobName());
         return new JobBuilder(batchAppConfigs.getJobName(), jobRepository)
                 .listener(listener)
                 .start(fileLoadStep)
@@ -55,12 +58,17 @@ public class BatchConfig {
     public Step fileLoadStep(JobRepository jobRepository, PlatformTransactionManager transactionManager,
                              FlatFileItemReader<Transaction> reader,
                              JpaItemWriter<Transaction> writer) {
-
+        log.info("Creating step: {}", LOAD_STEP_NAME);
         return new StepBuilder(LOAD_STEP_NAME, jobRepository)
                 .<Transaction, Transaction>chunk(batchAppConfigs.getChunkSize(), transactionManager)
                 .reader(reader)
                 .writer(writer)
                 .build();
+        // Uncomment the following lines if you want to add fault tolerance and skip logic
+        //.faultTolerant()
+        //.skip(Exception.class)
+        //.skipLimit(10) // adjust as needed
+
     }
 
     @Bean
@@ -68,10 +76,10 @@ public class BatchConfig {
         // Configure the FlatFileItemReader here
         BeanWrapperFieldSetMapper<Transaction> mapper = new BeanWrapperFieldSetMapper<>();
         mapper.setTargetType(Transaction.class);
-
+        log.info("Creating FlatFileItemReader for Transaction entity.");
         return new FlatFileItemReaderBuilder<Transaction>()
                 .name(READER_NAME)
-                .resource(new ClassPathResource(batchAppConfigs.getInputFilePath()))
+                .resource(new ClassPathResource(batchAppConfigs.getInputFilePath())) // this could have got from job parameters, for simplicity using a config property
                 .linesToSkip(LINES_TO_SKIP)
                 .skippedLinesCallback(headerValidationHandler())
                 .delimited()
@@ -92,6 +100,7 @@ public class BatchConfig {
 
     @Bean
     public JpaItemWriter<Transaction> writer(EntityManagerFactory entityManager) {
+        log.info("Creating JpaItemWriter for Transaction entity");
         return new JpaItemWriterBuilder<Transaction>()
                 .entityManagerFactory(entityManager)
                 .build();
@@ -103,6 +112,7 @@ public class BatchConfig {
             if (!line.equals(VALID_FIELD_ORDER)) {
                 throw new IllegalArgumentException("Invalid header in input file. Expected: " + VALID_FIELD_ORDER + ", but found: " + line);
             }
+            log.info("Header validation passed");
         };
     }
 
