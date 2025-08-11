@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,8 @@ import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TransactionDto {
 
     @NotNull(message = "Transaction ID cannot be null")
@@ -40,7 +44,7 @@ public class TransactionDto {
     @NotNull(message = "Customer ID cannot be null")
     private Long customerId;
 
-    @NotNull(message = "Customer ID cannot be null")
+    @NotNull(message = "Version cannot be null")
     @Min(value = 0, message = "Version must be greater than or equal to zero")
     private Long version;
 }
