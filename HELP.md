@@ -1,16 +1,28 @@
 # Read Me First
 
-The following was discovered as part of building this project:
-
-* The original package name 'com.ragukvn.spring-batch-data-manager' is invalid and this project uses '
-  com.ragukvn.data_manager' instead.
+* Better do a `mvn clean install` before running the application to ensure all dependencies are resolved and the project is built correctly.
 * I have avoided the fault tolerance features of batch processing, such as retry and skip, to keep the project simple
   and banking transactions are sensitive to these features.
 * The project uses an in-memory H2 database for demonstration purposes, but it can be easily configured to use other
   databases like MySQL or PostgreSQL by changing the `application.yml` file.
 * Assuming that the input file is in CSV format, and the data types are valid. Only file input header row validation is
   implemented, and no other validations are performed on the input data.
-* If validation needed can implemente a custom data processor to validate the input data.
+* If validation needed can implement a custom data processor to validate the input data.
+* The project uses Lombok to reduce boilerplate code, such as getters, setters, and constructors. Make sure to
+  have the Lombok plugin installed in your IDE for better development experience.
+* Mapstruct is used to map between different object types, such as mapping from CSV data to entity objects.
+* Swagger is used to document the RESTful web service endpoints, making it easier to understand and test the API.
+* Application properties are configured in `src/main/resources/application.yml`, where you can set up database
+  connections, logging levels, and other configurations.
+* Used SLF4J for logging, which is a simple facade for various logging frameworks. You can configure the logging
+  framework of your choice in the `application.yml` file.
+* The project uses Java 21 features, so make sure you have the correct JDK version installed.
+* Spring validation is used to validate the input data, ensuring that the data meets the required constraints before
+  processing it.
+* Jacoco is used for code coverage, and you can run the tests to see the coverage report.
+* All the request are logged via a rest controller advice, which can be found in the `RequestLoggingControllerAdvice.java` file.
+* The exception handling is done using a global exception handler, which can be found in the `GlobalExceptionHandler.java` file.
+
 
 
 # Getting Started

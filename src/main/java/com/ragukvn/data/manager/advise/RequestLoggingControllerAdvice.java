@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
-public class ControllerAdvise {
+public class RequestLoggingControllerAdvice {
 
     @ModelAttribute
     public void logRequest(HttpServletRequest request) {
