@@ -23,7 +23,51 @@
 * All the request are logged via a rest controller advice, which can be found in the `RequestLoggingControllerAdvice.java` file.
 * The exception handling is done using a global exception handler, which can be found in the `GlobalExceptionHandler.java` file.
 
+### API Documentation
+Access swagger UI at `http://localhost:8080/swagger-ui/index.html` to explore the API endpoints.
+## Design Patterns Used
 
+This project follows several industry-standard design patterns to ensure maintainability, scalability, and testability.
+
+### 1. Layered Architecture (N-Tier Pattern)
+- **Controller** – Handles HTTP requests and responses.
+- **Service** – Contains business logic.
+- **Repository** – Manages database access.
+- **Why?**  
+  Separating concerns allows each layer to evolve independently and simplifies testing.
+
+### 2. Repository Pattern
+- Implemented via Spring Data JPA `Repository` interfaces.
+- **Why?**  
+  Abstracts database operations, making it easy to switch or modify the persistence layer without affecting business logic.
+
+### 3. Data Transfer Object (DTO) Pattern
+- DTOs (`model.dto` package) carry data between layers without exposing entity details.
+- **Why?**  
+  Improves security, reduces coupling, and allows API-specific payloads.
+
+### 4. Mapper Pattern
+- `mapper` package converts between Entity ↔ DTO (manual or MapStruct).
+- **Why?**  
+  Centralizes conversion logic and avoids repetitive boilerplate code.
+
+### 5. Specification Pattern
+- `specification` package builds dynamic, type-safe queries.
+- **Why?**  
+  Allows flexible filtering and query composition without hardcoding SQL/JPQL.
+
+### 6. Builder Pattern
+- Used via Lombok’s `@Builder` annotation for entity and DTO creation.
+- **Why?**  
+  Makes object creation readable and reduces constructor overloads.
+
+---
+
+**Benefits of Using These Patterns**
+- Clear separation of concerns.
+- Easier unit and integration testing.
+- Scalable architecture that adapts to future requirements.
+- Reduced code duplication and better maintainability.
 
 # Getting Started
 
@@ -37,9 +81,3 @@
   for database interactions.
 * The project includes a RESTful web service
   using [Spring Web](https://docs.spring.io/spring-boot/3.5.4/reference/web/servlet.html).
-
-### API Documentation
-Access swagger UI at `http://localhost:8080/swagger-ui/index.html` to explore the API endpoints.
-### Reference Documentation
-
-For further reference, please consider the following sections:
