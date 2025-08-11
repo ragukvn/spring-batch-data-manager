@@ -25,6 +25,7 @@
 
 ### API Documentation
 Access swagger UI at `http://localhost:8080/swagger-ui/index.html` to explore the API endpoints.
+
 ## Design Patterns Used
 
 This project follows several industry-standard design patterns to ensure maintainability, scalability, and testability.
@@ -61,6 +62,11 @@ This project follows several industry-standard design patterns to ensure maintai
 - **Why?**  
   Makes object creation readable and reduces constructor overloads.
 
+### 7. Aspect-Oriented Programming (AOP) Pattern
+- `advise` package contains aspects for cross-cutting concerns such as logging, exception handling, and transaction management.
+- **Why?**  
+  Keeps business logic clean by separating reusable concerns (e.g., logging, auditing, security checks) into dedicated aspects, improving maintainability and consistency.
+
 ---
 
 **Benefits of Using These Patterns**
@@ -68,6 +74,8 @@ This project follows several industry-standard design patterns to ensure maintai
 - Easier unit and integration testing.
 - Scalable architecture that adapts to future requirements.
 - Reduced code duplication and better maintainability.
+- Centralized handling of cross-cutting concerns with AOP.
+
 
 # Getting Started
 
